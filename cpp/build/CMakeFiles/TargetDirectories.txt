@@ -1,0 +1,3 @@
+/Users/jasbook/repos_local/kings_cards/cpp/build/CMakeFiles/cpp.dir
+/Users/jasbook/repos_local/kings_cards/cpp/build/CMakeFiles/edit_cache.dir
+/Users/jasbook/repos_local/kings_cards/cpp/build/CMakeFiles/rebuild_cache.dir
