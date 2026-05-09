@@ -1,4 +1,6 @@
 /Users/jasbook/repos_local/kings_cards/cpp/c_version/build/CMakeFiles/kings_cards_c.dir
 /Users/jasbook/repos_local/kings_cards/cpp/c_version/build/CMakeFiles/kings_cards_c_memman.dir
+/Users/jasbook/repos_local/kings_cards/cpp/c_version/build/CMakeFiles/c_artillery.dir
+/Users/jasbook/repos_local/kings_cards/cpp/c_version/build/CMakeFiles/ptr_math.dir
 /Users/jasbook/repos_local/kings_cards/cpp/c_version/build/CMakeFiles/edit_cache.dir
 /Users/jasbook/repos_local/kings_cards/cpp/c_version/build/CMakeFiles/rebuild_cache.dir

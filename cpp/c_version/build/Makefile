@@ -142,6 +142,56 @@ kings_cards_c_memman/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/kings_cards_c_memman.dir/build.make CMakeFiles/kings_cards_c_memman.dir/build
 .PHONY : kings_cards_c_memman/fast
 
+#=============================================================================
+# Target rules for targets named c_artillery
+
+# Build rule for target.
+c_artillery: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 c_artillery
+.PHONY : c_artillery
+
+# fast build rule for target.
+c_artillery/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/c_artillery.dir/build.make CMakeFiles/c_artillery.dir/build
+.PHONY : c_artillery/fast
+
+#=============================================================================
+# Target rules for targets named ptr_math
+
+# Build rule for target.
+ptr_math: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ptr_math
+.PHONY : ptr_math
+
+# fast build rule for target.
+ptr_math/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ptr_math.dir/build.make CMakeFiles/ptr_math.dir/build
+.PHONY : ptr_math/fast
+
+c_artillery.o: c_artillery.c.o
+.PHONY : c_artillery.o
+
+# target to build an object file
+c_artillery.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/c_artillery.dir/build.make CMakeFiles/c_artillery.dir/c_artillery.c.o
+.PHONY : c_artillery.c.o
+
+c_artillery.i: c_artillery.c.i
+.PHONY : c_artillery.i
+
+# target to preprocess a source file
+c_artillery.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/c_artillery.dir/build.make CMakeFiles/c_artillery.dir/c_artillery.c.i
+.PHONY : c_artillery.c.i
+
+c_artillery.s: c_artillery.c.s
+.PHONY : c_artillery.s
+
+# target to generate assembly for a file
+c_artillery.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/c_artillery.dir/build.make CMakeFiles/c_artillery.dir/c_artillery.c.s
+.PHONY : c_artillery.c.s
+
 main.o: main.c.o
 .PHONY : main.o
 
@@ -190,6 +240,30 @@ main_memman.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/kings_cards_c_memman.dir/build.make CMakeFiles/kings_cards_c_memman.dir/main_memman.c.s
 .PHONY : main_memman.c.s
 
+ptr_math.o: ptr_math.c.o
+.PHONY : ptr_math.o
+
+# target to build an object file
+ptr_math.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ptr_math.dir/build.make CMakeFiles/ptr_math.dir/ptr_math.c.o
+.PHONY : ptr_math.c.o
+
+ptr_math.i: ptr_math.c.i
+.PHONY : ptr_math.i
+
+# target to preprocess a source file
+ptr_math.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ptr_math.dir/build.make CMakeFiles/ptr_math.dir/ptr_math.c.i
+.PHONY : ptr_math.c.i
+
+ptr_math.s: ptr_math.c.s
+.PHONY : ptr_math.s
+
+# target to generate assembly for a file
+ptr_math.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ptr_math.dir/build.make CMakeFiles/ptr_math.dir/ptr_math.c.s
+.PHONY : ptr_math.c.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -198,14 +272,22 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
+	@echo "... c_artillery"
 	@echo "... kings_cards_c"
 	@echo "... kings_cards_c_memman"
+	@echo "... ptr_math"
+	@echo "... c_artillery.o"
+	@echo "... c_artillery.i"
+	@echo "... c_artillery.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
 	@echo "... main_memman.o"
 	@echo "... main_memman.i"
 	@echo "... main_memman.s"
+	@echo "... ptr_math.o"
+	@echo "... ptr_math.i"
+	@echo "... ptr_math.s"
 .PHONY : help
 
 
