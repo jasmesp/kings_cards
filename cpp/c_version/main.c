@@ -122,6 +122,14 @@
 #define MAX_NAME_LEN 64      /* Fixed storage for each player's display name. */
 #define MAX_REIGNS 15        /* 3 cycles * 5 players = at most 15 reign scores. */
 
+static const char *DEFAULT_PLAYER_NAMES[PLAYER_COUNT] = {
+    "Miyeon",
+    "Minnie",
+    "Soyeon",
+    "Yuqi",
+    "Shuhua"
+};
+
 /*
     Suit
     ----
@@ -1460,15 +1468,15 @@ static Game create_game(void) {
     game.config.reignTurnsPerSubject = 3;
     build_deck(&game);
 
-    printf("Enter the five player names. Press Enter to keep the default name.\n");
+    printf("Enter the five player names. Press Enter to use the G-IDLE defaults.\n");
     for (int i = 0; i < PLAYER_COUNT; ++i) {
         char prompt[64];
         char name[MAX_NAME_LEN];
-        snprintf(prompt, sizeof(prompt), "Player %d name: ", i + 1);
+        snprintf(prompt, sizeof(prompt), "Player %d name [%s]: ", i + 1, DEFAULT_PLAYER_NAMES[i]);
         printf("%s", prompt);
         read_line(name, sizeof(name));
         if (name[0] == '\0') {
-            snprintf(game.players[i].name, sizeof(game.players[i].name), "Player %d", i + 1);
+            snprintf(game.players[i].name, sizeof(game.players[i].name), "%s", DEFAULT_PLAYER_NAMES[i]);
         } else {
             snprintf(game.players[i].name, sizeof(game.players[i].name), "%s", name);
         }

@@ -5,3 +5,4 @@ set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 
 add_executable(kings_cards_c main.c)
+add_executable(kings_cards_c_memman main_memman.c)
