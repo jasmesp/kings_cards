@@ -168,6 +168,43 @@ ptr_math/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/ptr_math.dir/build.make CMakeFiles/ptr_math.dir/build
 .PHONY : ptr_math/fast
 
+#=============================================================================
+# Target rules for targets named aespacheckers
+
+# Build rule for target.
+aespacheckers: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 aespacheckers
+.PHONY : aespacheckers
+
+# fast build rule for target.
+aespacheckers/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/aespacheckers.dir/build.make CMakeFiles/aespacheckers.dir/build
+.PHONY : aespacheckers/fast
+
+aespacheckers.o: aespacheckers.c.o
+.PHONY : aespacheckers.o
+
+# target to build an object file
+aespacheckers.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/aespacheckers.dir/build.make CMakeFiles/aespacheckers.dir/aespacheckers.c.o
+.PHONY : aespacheckers.c.o
+
+aespacheckers.i: aespacheckers.c.i
+.PHONY : aespacheckers.i
+
+# target to preprocess a source file
+aespacheckers.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/aespacheckers.dir/build.make CMakeFiles/aespacheckers.dir/aespacheckers.c.i
+.PHONY : aespacheckers.c.i
+
+aespacheckers.s: aespacheckers.c.s
+.PHONY : aespacheckers.s
+
+# target to generate assembly for a file
+aespacheckers.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/aespacheckers.dir/build.make CMakeFiles/aespacheckers.dir/aespacheckers.c.s
+.PHONY : aespacheckers.c.s
+
 c_artillery.o: c_artillery.c.o
 .PHONY : c_artillery.o
 
@@ -272,10 +309,14 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
+	@echo "... aespacheckers"
 	@echo "... c_artillery"
 	@echo "... kings_cards_c"
 	@echo "... kings_cards_c_memman"
 	@echo "... ptr_math"
+	@echo "... aespacheckers.o"
+	@echo "... aespacheckers.i"
+	@echo "... aespacheckers.s"
 	@echo "... c_artillery.o"
 	@echo "... c_artillery.i"
 	@echo "... c_artillery.s"

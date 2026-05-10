@@ -68,11 +68,17 @@
     -> Pointer arithmetic is only defined within the same array object.
     -> One-past-the-end pointer is legal to form, but not legal to dereference.
     -> Pointer subtraction is only defined for pointers into the same array.
+    -> Relational comparison like p < q is only defined inside the same array.
     -> If you cast to char * or unsigned char *, arithmetic becomes byte-based.
+    -> Standard C does not define arithmetic on void *.
+    -> A pointer can become stale after realloc moves an allocation.
+    -> Alignment matters: not every byte address is valid for every type.
+    -> Integer-to-pointer round trips are implementation-defined danger karaoke.
     -> If you lose the length/end pointer, you are walking through fog with a chainsaw.
 */
 
 #include <stddef.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -268,6 +274,30 @@ static void demo_struct_array_walk(void) {
 
     CHECK(total_scores(players, players + 3) == 60);
     printf("total score = %d\n", total_scores(players, players + 3));
+}
+
+/*
+    Demo 7: forbidden choreography / nightmare footguns
+    ---------------------------------------------------
+
+    These are operations we intentionally DO NOT execute.
+
+    C's nastiest pointer bugs often compile. That is why they feel haunted.
+    The compiler may shrug while you invite undefined behavior to the comeback
+    stage. This section is the warning label on the cursed photocard binder.
+*/
+static void demo_nightmare_footguns(void) {
+    SECTION("nightmare footguns we refuse to execute");
+
+    printf("1. Do not dereference one-past pointers: end is a stop sign, not a chair.\n");
+    printf("2. Do not subtract pointers from different arrays.\n");
+    printf("3. Do not use < or > on pointers from different arrays.\n");
+    printf("4. Do not do arithmetic on void * in standard C; cast to unsigned char * for bytes.\n");
+    printf("5. Do not keep old interior pointers after realloc may move storage.\n");
+    printf("6. Do not cast random integers to pointers and dereference them.\n");
+    printf("7. Do not pretend any byte address is aligned for int/double/struct access.\n");
+    printf("8. Do not trust sizeof on a pointer parameter to recover array length.\n");
+    printf("Naevis says: pass the length, respect the end pointer, stay in the array.\n");
 }
 
 /*
@@ -476,6 +506,184 @@ static int challenge_reverse_sum_works(void) {
     return challenge_reverse_sum(values, values + 4) == 18;
 }
 
+/*
+    Challenge 9: same-array subtraction guard
+    -----------------------------------------
+
+    Goal:
+    Return 1 only when it is valid to subtract a and b.
+
+    In real C, you cannot generally prove whether two arbitrary pointers are in
+    the same array just by looking at the pointer values. This challenge models
+    the decision by passing the array bounds too.
+
+    Valid:
+    -> a and b are both in [begin, end]
+    -> one-past end is okay for subtraction
+
+    Broken:
+    -> checks only that pointers are non-NULL
+*/
+static int challenge_can_subtract_ptrs(const int *begin,
+                                       const int *end,
+                                       const int *a,
+                                       const int *b) {
+    (void)begin;
+    (void)end;
+    return a != NULL && b != NULL; /* TODO: fix me */
+}
+
+static int challenge_can_subtract_ptrs_works(void) {
+    int first[4] = {0};
+    int second[4] = {0};
+
+    return challenge_can_subtract_ptrs(first, first + 4, first + 1, first + 4) &&
+           !challenge_can_subtract_ptrs(first, first + 4, second + 1, first + 2);
+}
+
+/*
+    Challenge 10: standard C byte offset from void-like memory
+    ----------------------------------------------------------
+
+    Goal:
+    Return byteOffset bytes after base.
+
+    Standard C rule:
+    -> void * arithmetic is not defined.
+    -> cast to unsigned char * first.
+
+    Broken:
+    -> returns base unchanged, like a pointer arithmetic ballad version where
+       nobody hits the choreo.
+*/
+static void *challenge_void_byte_offset(void *base, size_t byteOffset) {
+    (void)byteOffset;
+    return base; /* TODO: fix me */
+}
+
+static int challenge_void_byte_offset_works(void) {
+    int values[4] = {0};
+    unsigned char *bytes = (unsigned char *)values;
+    return challenge_void_byte_offset(values, 5) == bytes + 5;
+}
+
+/*
+    Challenge 11: one-past is not dereferenceable
+    ---------------------------------------------
+
+    Goal:
+    Return true if p is safe to dereference for array [begin, end).
+
+    Correct:
+    -> begin <= p && p < end
+
+    Notice:
+    -> p == end is a valid one-past pointer.
+    -> p == end is NOT safe to dereference.
+
+    Broken:
+    -> allows p == end
+*/
+static int challenge_can_dereference(const int *begin, const int *end, const int *p) {
+    return p >= begin && p <= end; /* TODO: fix me */
+}
+
+static int challenge_can_dereference_works(void) {
+    int values[3] = {1, 2, 3};
+    return challenge_can_dereference(values, values + 3, values + 2) &&
+           !challenge_can_dereference(values, values + 3, values + 3);
+}
+
+/*
+    Challenge 12: array length before decay
+    ---------------------------------------
+
+    Goal:
+    Return the number of elements in the local array inside this function.
+
+    Correct while you still have the array object:
+    -> sizeof array / sizeof array[0]
+
+    Broken:
+    -> uses the size of a pointer-shaped thing instead of the array
+*/
+static size_t challenge_local_array_count(void) {
+    int values[6] = {0};
+    (void)values;
+    return sizeof(void *) / sizeof(int); /* TODO: fix me */
+}
+
+static int challenge_local_array_count_works(void) {
+    return challenge_local_array_count() == 6;
+}
+
+/*
+    Challenge 13: stale interior pointer after realloc
+    --------------------------------------------------
+
+    Goal:
+    After realloc, recompute an interior pointer from the new base and saved
+    index.
+
+    Why:
+    -> realloc may move storage.
+    -> old interior pointers point into old storage.
+    -> even if the address happens to be unchanged once, do not rely on it.
+
+    This is a simulation. We use stack arrays as fake old/new storage so we can
+    test the pointer math without actually invoking realloc.
+
+    Broken:
+    -> returns oldInterior
+*/
+static int *challenge_recompute_after_realloc(int *newBase,
+                                              size_t savedIndex,
+                                              int *oldInterior) {
+    (void)newBase;
+    (void)savedIndex;
+    return oldInterior; /* TODO: fix me */
+}
+
+static int challenge_recompute_after_realloc_works(void) {
+    int oldStorage[4] = {1, 2, 3, 4};
+    int newStorage[4] = {1, 2, 3, 4};
+    size_t savedIndex = 2;
+
+    return challenge_recompute_after_realloc(newStorage, savedIndex, oldStorage + 2) ==
+           newStorage + 2;
+}
+
+/*
+    Challenge 14: alignment before typed access
+    -------------------------------------------
+
+    Goal:
+    Return true if address is aligned for int.
+
+    Useful check:
+    -> convert to uintptr_t for arithmetic inspection
+    -> address % _Alignof(int) == 0
+
+    Important:
+    -> this says whether alignment is okay.
+    -> it does NOT prove the bytes actually contain a live int object.
+
+    Broken:
+    -> always returns true
+*/
+static int challenge_is_aligned_for_int(const void *address) {
+    (void)address;
+    return 1; /* TODO: fix me */
+}
+
+static int challenge_is_aligned_for_int_works(void) {
+    int value = 0;
+    unsigned char *bytes = (unsigned char *)&value;
+
+    return challenge_is_aligned_for_int(&value) &&
+           !challenge_is_aligned_for_int(bytes + 1);
+}
+
 static void print_challenge_result(const char *name, int success) {
     printf("%s: %s\n", name, success ? "SUCCESS" : "FAIL");
 }
@@ -499,6 +707,18 @@ static void run_challenges(void) {
                            challenge_find_player_with_score_works());
     print_challenge_result("challenge 8 - reverse pointer walk",
                            challenge_reverse_sum_works());
+    print_challenge_result("challenge 9 - same-array subtraction guard",
+                           challenge_can_subtract_ptrs_works());
+    print_challenge_result("challenge 10 - void-like byte offset",
+                           challenge_void_byte_offset_works());
+    print_challenge_result("challenge 11 - one-past deref guard",
+                           challenge_can_dereference_works());
+    print_challenge_result("challenge 12 - array length before decay",
+                           challenge_local_array_count_works());
+    print_challenge_result("challenge 13 - recompute after realloc",
+                           challenge_recompute_after_realloc_works());
+    print_challenge_result("challenge 14 - alignment check before typed access",
+                           challenge_is_aligned_for_int_works());
 }
 
 int main(void) {
@@ -512,6 +732,7 @@ int main(void) {
     demo_pointer_difference();
     demo_byte_walking();
     demo_struct_array_walk();
+    demo_nightmare_footguns();
     run_challenges();
 
     SECTION("done");

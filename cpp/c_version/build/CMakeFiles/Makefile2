@@ -67,6 +67,7 @@ all: CMakeFiles/kings_cards_c.dir/all
 all: CMakeFiles/kings_cards_c_memman.dir/all
 all: CMakeFiles/c_artillery.dir/all
 all: CMakeFiles/ptr_math.dir/all
+all: CMakeFiles/aespacheckers.dir/all
 .PHONY : all
 
 # The main recursive "codegen" target.
@@ -74,6 +75,7 @@ codegen: CMakeFiles/kings_cards_c.dir/codegen
 codegen: CMakeFiles/kings_cards_c_memman.dir/codegen
 codegen: CMakeFiles/c_artillery.dir/codegen
 codegen: CMakeFiles/ptr_math.dir/codegen
+codegen: CMakeFiles/aespacheckers.dir/codegen
 .PHONY : codegen
 
 # The main recursive "preinstall" target.
@@ -85,6 +87,7 @@ clean: CMakeFiles/kings_cards_c.dir/clean
 clean: CMakeFiles/kings_cards_c_memman.dir/clean
 clean: CMakeFiles/c_artillery.dir/clean
 clean: CMakeFiles/ptr_math.dir/clean
+clean: CMakeFiles/aespacheckers.dir/clean
 .PHONY : clean
 
 #=============================================================================
@@ -94,7 +97,7 @@ clean: CMakeFiles/ptr_math.dir/clean
 CMakeFiles/kings_cards_c.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/kings_cards_c.dir/build.make CMakeFiles/kings_cards_c.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/kings_cards_c.dir/build.make CMakeFiles/kings_cards_c.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/jasbook/repos_local/kings_cards/cpp/c_version/build/CMakeFiles --progress-num=3,4 "Built target kings_cards_c"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/jasbook/repos_local/kings_cards/cpp/c_version/build/CMakeFiles --progress-num=5,6 "Built target kings_cards_c"
 .PHONY : CMakeFiles/kings_cards_c.dir/all
 
 # Build rule for subdir invocation for target.
@@ -111,7 +114,7 @@ kings_cards_c: CMakeFiles/kings_cards_c.dir/rule
 # codegen rule for target.
 CMakeFiles/kings_cards_c.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/kings_cards_c.dir/build.make CMakeFiles/kings_cards_c.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/jasbook/repos_local/kings_cards/cpp/c_version/build/CMakeFiles --progress-num=3,4 "Finished codegen for target kings_cards_c"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/jasbook/repos_local/kings_cards/cpp/c_version/build/CMakeFiles --progress-num=5,6 "Finished codegen for target kings_cards_c"
 .PHONY : CMakeFiles/kings_cards_c.dir/codegen
 
 # clean rule for target.
@@ -126,7 +129,7 @@ CMakeFiles/kings_cards_c.dir/clean:
 CMakeFiles/kings_cards_c_memman.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/kings_cards_c_memman.dir/build.make CMakeFiles/kings_cards_c_memman.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/kings_cards_c_memman.dir/build.make CMakeFiles/kings_cards_c_memman.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/jasbook/repos_local/kings_cards/cpp/c_version/build/CMakeFiles --progress-num=5,6 "Built target kings_cards_c_memman"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/jasbook/repos_local/kings_cards/cpp/c_version/build/CMakeFiles --progress-num=7,8 "Built target kings_cards_c_memman"
 .PHONY : CMakeFiles/kings_cards_c_memman.dir/all
 
 # Build rule for subdir invocation for target.
@@ -143,7 +146,7 @@ kings_cards_c_memman: CMakeFiles/kings_cards_c_memman.dir/rule
 # codegen rule for target.
 CMakeFiles/kings_cards_c_memman.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/kings_cards_c_memman.dir/build.make CMakeFiles/kings_cards_c_memman.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/jasbook/repos_local/kings_cards/cpp/c_version/build/CMakeFiles --progress-num=5,6 "Finished codegen for target kings_cards_c_memman"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/jasbook/repos_local/kings_cards/cpp/c_version/build/CMakeFiles --progress-num=7,8 "Finished codegen for target kings_cards_c_memman"
 .PHONY : CMakeFiles/kings_cards_c_memman.dir/codegen
 
 # clean rule for target.
@@ -158,7 +161,7 @@ CMakeFiles/kings_cards_c_memman.dir/clean:
 CMakeFiles/c_artillery.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/c_artillery.dir/build.make CMakeFiles/c_artillery.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/c_artillery.dir/build.make CMakeFiles/c_artillery.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/jasbook/repos_local/kings_cards/cpp/c_version/build/CMakeFiles --progress-num=1,2 "Built target c_artillery"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/jasbook/repos_local/kings_cards/cpp/c_version/build/CMakeFiles --progress-num=3,4 "Built target c_artillery"
 .PHONY : CMakeFiles/c_artillery.dir/all
 
 # Build rule for subdir invocation for target.
@@ -175,7 +178,7 @@ c_artillery: CMakeFiles/c_artillery.dir/rule
 # codegen rule for target.
 CMakeFiles/c_artillery.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/c_artillery.dir/build.make CMakeFiles/c_artillery.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/jasbook/repos_local/kings_cards/cpp/c_version/build/CMakeFiles --progress-num=1,2 "Finished codegen for target c_artillery"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/jasbook/repos_local/kings_cards/cpp/c_version/build/CMakeFiles --progress-num=3,4 "Finished codegen for target c_artillery"
 .PHONY : CMakeFiles/c_artillery.dir/codegen
 
 # clean rule for target.
@@ -190,7 +193,7 @@ CMakeFiles/c_artillery.dir/clean:
 CMakeFiles/ptr_math.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/ptr_math.dir/build.make CMakeFiles/ptr_math.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/ptr_math.dir/build.make CMakeFiles/ptr_math.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/jasbook/repos_local/kings_cards/cpp/c_version/build/CMakeFiles --progress-num=7,8 "Built target ptr_math"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/jasbook/repos_local/kings_cards/cpp/c_version/build/CMakeFiles --progress-num=9,10 "Built target ptr_math"
 .PHONY : CMakeFiles/ptr_math.dir/all
 
 # Build rule for subdir invocation for target.
@@ -207,13 +210,45 @@ ptr_math: CMakeFiles/ptr_math.dir/rule
 # codegen rule for target.
 CMakeFiles/ptr_math.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/ptr_math.dir/build.make CMakeFiles/ptr_math.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/jasbook/repos_local/kings_cards/cpp/c_version/build/CMakeFiles --progress-num=7,8 "Finished codegen for target ptr_math"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/jasbook/repos_local/kings_cards/cpp/c_version/build/CMakeFiles --progress-num=9,10 "Finished codegen for target ptr_math"
 .PHONY : CMakeFiles/ptr_math.dir/codegen
 
 # clean rule for target.
 CMakeFiles/ptr_math.dir/clean:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/ptr_math.dir/build.make CMakeFiles/ptr_math.dir/clean
 .PHONY : CMakeFiles/ptr_math.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/aespacheckers.dir
+
+# All Build rule for target.
+CMakeFiles/aespacheckers.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/aespacheckers.dir/build.make CMakeFiles/aespacheckers.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/aespacheckers.dir/build.make CMakeFiles/aespacheckers.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/jasbook/repos_local/kings_cards/cpp/c_version/build/CMakeFiles --progress-num=1,2 "Built target aespacheckers"
+.PHONY : CMakeFiles/aespacheckers.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/aespacheckers.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/jasbook/repos_local/kings_cards/cpp/c_version/build/CMakeFiles 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/aespacheckers.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/jasbook/repos_local/kings_cards/cpp/c_version/build/CMakeFiles 0
+.PHONY : CMakeFiles/aespacheckers.dir/rule
+
+# Convenience name for target.
+aespacheckers: CMakeFiles/aespacheckers.dir/rule
+.PHONY : aespacheckers
+
+# codegen rule for target.
+CMakeFiles/aespacheckers.dir/codegen:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/aespacheckers.dir/build.make CMakeFiles/aespacheckers.dir/codegen
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/jasbook/repos_local/kings_cards/cpp/c_version/build/CMakeFiles --progress-num=1,2 "Finished codegen for target aespacheckers"
+.PHONY : CMakeFiles/aespacheckers.dir/codegen
+
+# clean rule for target.
+CMakeFiles/aespacheckers.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/aespacheckers.dir/build.make CMakeFiles/aespacheckers.dir/clean
+.PHONY : CMakeFiles/aespacheckers.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.
