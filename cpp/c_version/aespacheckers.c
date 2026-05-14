@@ -51,64 +51,73 @@
 
 #define SECTION(title) printf("\n=== %s ===\n", title)
 
-typedef enum {
-    EMPTY = 0,
-    RED_MAN,
-    RED_KING,
-    WHITE_MAN,
-    WHITE_KING
-} Piece;
+typedef enum { EMPTY = 0, RED_MAN, RED_KING, WHITE_MAN, WHITE_KING } Piece;
 
 typedef struct {
-    int row;
-    int col;
+  int row;
+  int col;
 } Square;
 
 typedef struct {
-    Piece cells[BOARD_SIZE][BOARD_SIZE];
+  Piece cells[BOARD_SIZE][BOARD_SIZE];
 } Board;
 
 static const char *piece_name(Piece piece) {
-    switch (piece) {
-        case EMPTY: return "EMPTY";
-        case RED_MAN: return "RED_MAN";
-        case RED_KING: return "RED_KING";
-        case WHITE_MAN: return "WHITE_MAN";
-        case WHITE_KING: return "WHITE_KING";
-    }
-    return "UNKNOWN";
+  switch (piece) {
+  case EMPTY:
+    return "EMPTY";
+  case RED_MAN:
+    return "RED_MAN";
+  case RED_KING:
+    return "RED_KING";
+  case WHITE_MAN:
+    return "WHITE_MAN";
+  case WHITE_KING:
+    return "WHITE_KING";
+  }
+  return "UNKNOWN";
 }
 
 static void print_result(const char *name, bool success) {
-    printf("%s: %s\n", name, success ? "SUCCESS" : "FAIL");
+  printf("%s: %s\n", name, success ? "SUCCESS" : "FAIL");
 }
 
 static void clear_board(Board *board) {
-    for (int row = 0; row < BOARD_SIZE; ++row) {
-        for (int col = 0; col < BOARD_SIZE; ++col) {
-            board->cells[row][col] = EMPTY;
-        }
+  for (int row = 0; row < BOARD_SIZE; ++row) {
+    for (int col = 0; col < BOARD_SIZE; ++col) {
+      board->cells[row][col] = EMPTY;
     }
+  }
 }
 
 static void print_board(const Board *board) {
-    printf("    0 1 2 3 4 5 6 7\n");
-    printf("   -----------------\n");
-    for (int row = 0; row < BOARD_SIZE; ++row) {
-        printf("%d | ", row);
-        for (int col = 0; col < BOARD_SIZE; ++col) {
-            char glyph = '.';
-            switch (board->cells[row][col]) {
-                case EMPTY: glyph = ((row + col) % 2 == 1) ? '_' : '.'; break;
-                case RED_MAN: glyph = 'r'; break;
-                case RED_KING: glyph = 'R'; break;
-                case WHITE_MAN: glyph = 'w'; break;
-                case WHITE_KING: glyph = 'W'; break;
-            }
-            printf("%c ", glyph);
-        }
-        printf("|\n");
+  printf("    0 1 2 3 4 5 6 7\n");
+  printf("   -----------------\n");
+  for (int row = 0; row < BOARD_SIZE; ++row) {
+    printf("%d | ", row);
+    for (int col = 0; col < BOARD_SIZE; ++col) {
+      char glyph = '.';
+      switch (board->cells[row][col]) {
+      case EMPTY:
+        glyph = ((row + col) % 2 == 1) ? '_' : '.';
+        break;
+      case RED_MAN:
+        glyph = 'r';
+        break;
+      case RED_KING:
+        glyph = 'R';
+        break;
+      case WHITE_MAN:
+        glyph = 'w';
+        break;
+      case WHITE_KING:
+        glyph = 'W';
+        break;
+      }
+      printf("%c ", glyph);
     }
+    printf("|\n");
+  }
 }
 
 /*
@@ -127,16 +136,20 @@ static void print_board(const Board *board) {
     -> negative indexes are chaos gremlins wearing a Ningning photocard sleeve
 */
 static bool challenge_in_bounds(int row, int col) {
-    return row < BOARD_SIZE && col < BOARD_SIZE; /* TODO: fix me */
+  if (row >= 0 && col >= 0) {
+    if (row < BOARD_SIZE && col < BOARD_SIZE) {
+      return true;
+    } else {
+      return false;
+    } /* TODO: fix me */
+  } else
+    return false;
 }
 
 static bool challenge_in_bounds_works(void) {
-    return challenge_in_bounds(0, 0) &&
-           challenge_in_bounds(7, 7) &&
-           !challenge_in_bounds(-1, 0) &&
-           !challenge_in_bounds(0, -1) &&
-           !challenge_in_bounds(8, 0) &&
-           !challenge_in_bounds(0, 8);
+  return challenge_in_bounds(0, 0) && challenge_in_bounds(7, 7) &&
+         !challenge_in_bounds(-1, 0) && !challenge_in_bounds(0, -1) &&
+         !challenge_in_bounds(8, 0) && !challenge_in_bounds(0, 8);
 }
 
 /*
@@ -153,14 +166,12 @@ static bool challenge_in_bounds_works(void) {
     -> uses even squares instead
 */
 static bool challenge_is_dark_square(int row, int col) {
-    return (row + col) % 2 == 0; /* TODO: fix me */
+  return (row + col) % 2 == 0; /* TODO: fix me */
 }
 
 static bool challenge_is_dark_square_works(void) {
-    return challenge_is_dark_square(0, 1) &&
-           challenge_is_dark_square(1, 0) &&
-           !challenge_is_dark_square(0, 0) &&
-           !challenge_is_dark_square(7, 7);
+  return challenge_is_dark_square(0, 1) && challenge_is_dark_square(1, 0) &&
+         !challenge_is_dark_square(0, 0) && !challenge_is_dark_square(7, 7);
 }
 
 /*
@@ -174,15 +185,13 @@ static bool challenge_is_dark_square_works(void) {
     -> only recognizes RED_MAN
 */
 static bool challenge_is_red(Piece piece) {
-    return piece == RED_MAN; /* TODO: fix me */
+  return piece == RED_MAN; /* TODO: fix me */
 }
 
 static bool challenge_is_red_works(void) {
-    return challenge_is_red(RED_MAN) &&
-           challenge_is_red(RED_KING) &&
-           !challenge_is_red(WHITE_MAN) &&
-           !challenge_is_red(WHITE_KING) &&
-           !challenge_is_red(EMPTY);
+  return challenge_is_red(RED_MAN) && challenge_is_red(RED_KING) &&
+         !challenge_is_red(WHITE_MAN) && !challenge_is_red(WHITE_KING) &&
+         !challenge_is_red(EMPTY);
 }
 
 /*
@@ -196,16 +205,16 @@ static bool challenge_is_red_works(void) {
     -> says any different piece is an enemy, including EMPTY vs RED_MAN
 */
 static bool challenge_are_enemies(Piece a, Piece b) {
-    return a != b; /* TODO: fix me */
+  return a != b; /* TODO: fix me */
 }
 
 static bool challenge_are_enemies_works(void) {
-    return challenge_are_enemies(RED_MAN, WHITE_MAN) &&
-           challenge_are_enemies(RED_KING, WHITE_KING) &&
-           !challenge_are_enemies(RED_MAN, RED_KING) &&
-           !challenge_are_enemies(WHITE_MAN, WHITE_KING) &&
-           !challenge_are_enemies(EMPTY, RED_MAN) &&
-           !challenge_are_enemies(EMPTY, EMPTY);
+  return challenge_are_enemies(RED_MAN, WHITE_MAN) &&
+         challenge_are_enemies(RED_KING, WHITE_KING) &&
+         !challenge_are_enemies(RED_MAN, RED_KING) &&
+         !challenge_are_enemies(WHITE_MAN, WHITE_KING) &&
+         !challenge_are_enemies(EMPTY, RED_MAN) &&
+         !challenge_are_enemies(EMPTY, EMPTY);
 }
 
 /*
@@ -224,38 +233,38 @@ static bool challenge_are_enemies_works(void) {
     -> clears the board but places nothing
 */
 static void challenge_setup_starting_board(Board *board) {
-    clear_board(board);
-    /* TODO: place red and white starting pieces */
+  clear_board(board);
+  /* TODO: place red and white starting pieces */
 }
 
 static bool challenge_setup_starting_board_works(void) {
-    Board board;
-    challenge_setup_starting_board(&board);
+  Board board;
+  challenge_setup_starting_board(&board);
 
-    int redCount = 0;
-    int whiteCount = 0;
-    int badCount = 0;
+  int redCount = 0;
+  int whiteCount = 0;
+  int badCount = 0;
 
-    for (int row = 0; row < BOARD_SIZE; ++row) {
-        for (int col = 0; col < BOARD_SIZE; ++col) {
-            Piece piece = board.cells[row][col];
-            if (piece == RED_MAN) {
-                ++redCount;
-                if (!(row <= 2 && (row + col) % 2 == 1)) {
-                    ++badCount;
-                }
-            } else if (piece == WHITE_MAN) {
-                ++whiteCount;
-                if (!(row >= 5 && (row + col) % 2 == 1)) {
-                    ++badCount;
-                }
-            } else if (piece != EMPTY) {
-                ++badCount;
-            }
+  for (int row = 0; row < BOARD_SIZE; ++row) {
+    for (int col = 0; col < BOARD_SIZE; ++col) {
+      Piece piece = board.cells[row][col];
+      if (piece == RED_MAN) {
+        ++redCount;
+        if (!(row <= 2 && (row + col) % 2 == 1)) {
+          ++badCount;
         }
+      } else if (piece == WHITE_MAN) {
+        ++whiteCount;
+        if (!(row >= 5 && (row + col) % 2 == 1)) {
+          ++badCount;
+        }
+      } else if (piece != EMPTY) {
+        ++badCount;
+      }
     }
+  }
 
-    return redCount == 12 && whiteCount == 12 && badCount == 0;
+  return redCount == 12 && whiteCount == 12 && badCount == 0;
 }
 
 /*
@@ -278,20 +287,20 @@ static bool challenge_setup_starting_board_works(void) {
        practice room but nobody told the camera operator"
 */
 static int challenge_forward_delta(Piece piece) {
-    if (piece == RED_MAN) {
-        return -1; /* TODO: fix me */
-    }
-    if (piece == WHITE_MAN) {
-        return 1; /* TODO: fix me */
-    }
-    return 0;
+  if (piece == RED_MAN) {
+    return -1; /* TODO: fix me */
+  }
+  if (piece == WHITE_MAN) {
+    return 1; /* TODO: fix me */
+  }
+  return 0;
 }
 
 static bool challenge_forward_delta_works(void) {
-    return challenge_forward_delta(RED_MAN) == 1 &&
-           challenge_forward_delta(WHITE_MAN) == -1 &&
-           challenge_forward_delta(RED_KING) == 0 &&
-           challenge_forward_delta(EMPTY) == 0;
+  return challenge_forward_delta(RED_MAN) == 1 &&
+         challenge_forward_delta(WHITE_MAN) == -1 &&
+         challenge_forward_delta(RED_KING) == 0 &&
+         challenge_forward_delta(EMPTY) == 0;
 }
 
 /*
@@ -311,16 +320,16 @@ static bool challenge_forward_delta_works(void) {
     -> allows straight vertical moves
 */
 static bool challenge_is_one_step_diagonal(Square from, Square to) {
-    int rowDelta = to.row - from.row;
-    int colDelta = to.col - from.col;
-    return (rowDelta == 1 || rowDelta == -1) && colDelta == 0; /* TODO: fix me */
+  int rowDelta = to.row - from.row;
+  int colDelta = to.col - from.col;
+  return (rowDelta == 1 || rowDelta == -1) && colDelta == 0; /* TODO: fix me */
 }
 
 static bool challenge_is_one_step_diagonal_works(void) {
-    return challenge_is_one_step_diagonal((Square){2, 3}, (Square){3, 4}) &&
-           challenge_is_one_step_diagonal((Square){2, 3}, (Square){1, 2}) &&
-           !challenge_is_one_step_diagonal((Square){2, 3}, (Square){3, 3}) &&
-           !challenge_is_one_step_diagonal((Square){2, 3}, (Square){4, 5});
+  return challenge_is_one_step_diagonal((Square){2, 3}, (Square){3, 4}) &&
+         challenge_is_one_step_diagonal((Square){2, 3}, (Square){1, 2}) &&
+         !challenge_is_one_step_diagonal((Square){2, 3}, (Square){3, 3}) &&
+         !challenge_is_one_step_diagonal((Square){2, 3}, (Square){4, 5});
 }
 
 /*
@@ -341,30 +350,31 @@ static bool challenge_is_one_step_diagonal_works(void) {
     Broken:
     -> checks diagonal and empty, but ignores direction and playable squares
 */
-static bool challenge_can_simple_move(const Board *board, Square from, Square to) {
-    Piece piece = board->cells[from.row][from.col];
-    if (piece == EMPTY) {
-        return false;
-    }
-    if (board->cells[to.row][to.col] != EMPTY) {
-        return false;
-    }
-    return challenge_is_one_step_diagonal(from, to); /* TODO: fix me */
+static bool challenge_can_simple_move(const Board *board, Square from,
+                                      Square to) {
+  Piece piece = board->cells[from.row][from.col];
+  if (piece == EMPTY) {
+    return false;
+  }
+  if (board->cells[to.row][to.col] != EMPTY) {
+    return false;
+  }
+  return challenge_is_one_step_diagonal(from, to); /* TODO: fix me */
 }
 
 static bool challenge_can_simple_move_works(void) {
-    Board board;
-    clear_board(&board);
-    board.cells[2][3] = RED_MAN;
-    board.cells[5][4] = WHITE_MAN;
-    board.cells[4][1] = RED_KING;
+  Board board;
+  clear_board(&board);
+  board.cells[2][3] = RED_MAN;
+  board.cells[5][4] = WHITE_MAN;
+  board.cells[4][1] = RED_KING;
 
-    return challenge_can_simple_move(&board, (Square){2, 3}, (Square){3, 4}) &&
-           !challenge_can_simple_move(&board, (Square){2, 3}, (Square){1, 4}) &&
-           challenge_can_simple_move(&board, (Square){5, 4}, (Square){4, 3}) &&
-           !challenge_can_simple_move(&board, (Square){5, 4}, (Square){6, 3}) &&
-           challenge_can_simple_move(&board, (Square){4, 1}, (Square){3, 0}) &&
-           challenge_can_simple_move(&board, (Square){4, 1}, (Square){5, 2});
+  return challenge_can_simple_move(&board, (Square){2, 3}, (Square){3, 4}) &&
+         !challenge_can_simple_move(&board, (Square){2, 3}, (Square){1, 4}) &&
+         challenge_can_simple_move(&board, (Square){5, 4}, (Square){4, 3}) &&
+         !challenge_can_simple_move(&board, (Square){5, 4}, (Square){6, 3}) &&
+         challenge_can_simple_move(&board, (Square){4, 1}, (Square){3, 0}) &&
+         challenge_can_simple_move(&board, (Square){4, 1}, (Square){5, 2});
 }
 
 /*
@@ -382,16 +392,15 @@ static bool challenge_can_simple_move_works(void) {
     -> returns destination
 */
 static Square challenge_capture_midpoint(Square from, Square to) {
-    (void)from;
-    return to; /* TODO: fix me */
+  (void)from;
+  return to; /* TODO: fix me */
 }
 
 static bool challenge_capture_midpoint_works(void) {
-    Square midA = challenge_capture_midpoint((Square){2, 3}, (Square){4, 5});
-    Square midB = challenge_capture_midpoint((Square){5, 6}, (Square){3, 4});
+  Square midA = challenge_capture_midpoint((Square){2, 3}, (Square){4, 5});
+  Square midB = challenge_capture_midpoint((Square){5, 6}, (Square){3, 4});
 
-    return midA.row == 3 && midA.col == 4 &&
-           midB.row == 4 && midB.col == 5;
+  return midA.row == 3 && midA.col == 4 && midB.row == 4 && midB.col == 5;
 }
 
 /*
@@ -414,28 +423,28 @@ static bool challenge_capture_midpoint_works(void) {
     -> only checks the two-step shape
 */
 static bool challenge_can_capture(const Board *board, Square from, Square to) {
-    (void)board;
-    int rowDelta = to.row - from.row;
-    int colDelta = to.col - from.col;
-    return (rowDelta == 2 || rowDelta == -2) &&
-           (colDelta == 2 || colDelta == -2); /* TODO: fix me */
+  (void)board;
+  int rowDelta = to.row - from.row;
+  int colDelta = to.col - from.col;
+  return (rowDelta == 2 || rowDelta == -2) &&
+         (colDelta == 2 || colDelta == -2); /* TODO: fix me */
 }
 
 static bool challenge_can_capture_works(void) {
-    Board board;
-    clear_board(&board);
-    board.cells[2][3] = RED_MAN;
-    board.cells[3][4] = WHITE_MAN;
-    board.cells[5][6] = WHITE_MAN;
-    board.cells[4][5] = RED_MAN;
-    board.cells[5][0] = RED_KING;
-    board.cells[4][1] = WHITE_MAN;
+  Board board;
+  clear_board(&board);
+  board.cells[2][3] = RED_MAN;
+  board.cells[3][4] = WHITE_MAN;
+  board.cells[5][6] = WHITE_MAN;
+  board.cells[4][5] = RED_MAN;
+  board.cells[5][0] = RED_KING;
+  board.cells[4][1] = WHITE_MAN;
 
-    return challenge_can_capture(&board, (Square){2, 3}, (Square){4, 5}) &&
-           !challenge_can_capture(&board, (Square){2, 3}, (Square){0, 1}) &&
-           challenge_can_capture(&board, (Square){5, 6}, (Square){3, 4}) &&
-           challenge_can_capture(&board, (Square){5, 0}, (Square){3, 2}) &&
-           !challenge_can_capture(&board, (Square){2, 3}, (Square){4, 1});
+  return challenge_can_capture(&board, (Square){2, 3}, (Square){4, 5}) &&
+         !challenge_can_capture(&board, (Square){2, 3}, (Square){0, 1}) &&
+         challenge_can_capture(&board, (Square){5, 6}, (Square){3, 4}) &&
+         challenge_can_capture(&board, (Square){5, 0}, (Square){3, 2}) &&
+         !challenge_can_capture(&board, (Square){2, 3}, (Square){4, 1});
 }
 
 /*
@@ -453,19 +462,18 @@ static bool challenge_can_capture_works(void) {
     -> copies piece but forgets to clear source, creating a backup dancer clone
 */
 static void challenge_apply_simple_move(Board *board, Square from, Square to) {
-    board->cells[to.row][to.col] = board->cells[from.row][from.col];
-    /* TODO: clear source */
+  board->cells[to.row][to.col] = board->cells[from.row][from.col];
+  /* TODO: clear source */
 }
 
 static bool challenge_apply_simple_move_works(void) {
-    Board board;
-    clear_board(&board);
-    board.cells[2][3] = RED_MAN;
+  Board board;
+  clear_board(&board);
+  board.cells[2][3] = RED_MAN;
 
-    challenge_apply_simple_move(&board, (Square){2, 3}, (Square){3, 4});
+  challenge_apply_simple_move(&board, (Square){2, 3}, (Square){3, 4});
 
-    return board.cells[2][3] == EMPTY &&
-           board.cells[3][4] == RED_MAN;
+  return board.cells[2][3] == EMPTY && board.cells[3][4] == RED_MAN;
 }
 
 /*
@@ -479,24 +487,23 @@ static bool challenge_apply_simple_move_works(void) {
     -> moves and clears source, but does not remove captured piece
 */
 static void challenge_apply_capture(Board *board, Square from, Square to) {
-    Square mid = challenge_capture_midpoint(from, to);
-    (void)mid;
-    board->cells[to.row][to.col] = board->cells[from.row][from.col];
-    board->cells[from.row][from.col] = EMPTY;
-    /* TODO: clear midpoint */
+  Square mid = challenge_capture_midpoint(from, to);
+  (void)mid;
+  board->cells[to.row][to.col] = board->cells[from.row][from.col];
+  board->cells[from.row][from.col] = EMPTY;
+  /* TODO: clear midpoint */
 }
 
 static bool challenge_apply_capture_works(void) {
-    Board board;
-    clear_board(&board);
-    board.cells[2][3] = RED_MAN;
-    board.cells[3][4] = WHITE_MAN;
+  Board board;
+  clear_board(&board);
+  board.cells[2][3] = RED_MAN;
+  board.cells[3][4] = WHITE_MAN;
 
-    challenge_apply_capture(&board, (Square){2, 3}, (Square){4, 5});
+  challenge_apply_capture(&board, (Square){2, 3}, (Square){4, 5});
 
-    return board.cells[2][3] == EMPTY &&
-           board.cells[3][4] == EMPTY &&
-           board.cells[4][5] == RED_MAN;
+  return board.cells[2][3] == EMPTY && board.cells[3][4] == EMPTY &&
+         board.cells[4][5] == RED_MAN;
 }
 
 /*
@@ -514,15 +521,15 @@ static bool challenge_apply_capture_works(void) {
     -> never promotes
 */
 static Piece challenge_promote_if_needed(Piece piece, int row) {
-    (void)row;
-    return piece; /* TODO: fix me */
+  (void)row;
+  return piece; /* TODO: fix me */
 }
 
 static bool challenge_promote_if_needed_works(void) {
-    return challenge_promote_if_needed(RED_MAN, 7) == RED_KING &&
-           challenge_promote_if_needed(WHITE_MAN, 0) == WHITE_KING &&
-           challenge_promote_if_needed(RED_MAN, 6) == RED_MAN &&
-           challenge_promote_if_needed(WHITE_KING, 0) == WHITE_KING;
+  return challenge_promote_if_needed(RED_MAN, 7) == RED_KING &&
+         challenge_promote_if_needed(WHITE_MAN, 0) == WHITE_KING &&
+         challenge_promote_if_needed(RED_MAN, 6) == RED_MAN &&
+         challenge_promote_if_needed(WHITE_KING, 0) == WHITE_KING;
 }
 
 /*
@@ -542,31 +549,31 @@ static bool challenge_promote_if_needed_works(void) {
     -> counts only men, not kings
 */
 static int challenge_count_side_pieces(const Board *board, bool sideIsRed) {
-    int count = 0;
-    for (int row = 0; row < BOARD_SIZE; ++row) {
-        for (int col = 0; col < BOARD_SIZE; ++col) {
-            Piece piece = board->cells[row][col];
-            if (sideIsRed && piece == RED_MAN) {
-                ++count;
-            }
-            if (!sideIsRed && piece == WHITE_MAN) {
-                ++count;
-            }
-        }
+  int count = 0;
+  for (int row = 0; row < BOARD_SIZE; ++row) {
+    for (int col = 0; col < BOARD_SIZE; ++col) {
+      Piece piece = board->cells[row][col];
+      if (sideIsRed && piece == RED_MAN) {
+        ++count;
+      }
+      if (!sideIsRed && piece == WHITE_MAN) {
+        ++count;
+      }
     }
-    return count; /* TODO: include kings */
+  }
+  return count; /* TODO: include kings */
 }
 
 static bool challenge_count_side_pieces_works(void) {
-    Board board;
-    clear_board(&board);
-    board.cells[0][1] = RED_MAN;
-    board.cells[2][3] = RED_KING;
-    board.cells[5][4] = WHITE_MAN;
-    board.cells[7][6] = WHITE_KING;
+  Board board;
+  clear_board(&board);
+  board.cells[0][1] = RED_MAN;
+  board.cells[2][3] = RED_KING;
+  board.cells[5][4] = WHITE_MAN;
+  board.cells[7][6] = WHITE_KING;
 
-    return challenge_count_side_pieces(&board, true) == 2 &&
-           challenge_count_side_pieces(&board, false) == 2;
+  return challenge_count_side_pieces(&board, true) == 2 &&
+         challenge_count_side_pieces(&board, false) == 2;
 }
 
 /*
@@ -585,69 +592,75 @@ static bool challenge_count_side_pieces_works(void) {
     -> always says no winner
 */
 static Piece challenge_winner(const Board *board) {
-    (void)board;
-    return EMPTY; /* TODO: fix me */
+  (void)board;
+  return EMPTY; /* TODO: fix me */
 }
 
 static bool challenge_winner_works(void) {
-    Board redWins;
-    Board whiteWins;
-    Board noWinner;
-    clear_board(&redWins);
-    clear_board(&whiteWins);
-    clear_board(&noWinner);
+  Board redWins;
+  Board whiteWins;
+  Board noWinner;
+  clear_board(&redWins);
+  clear_board(&whiteWins);
+  clear_board(&noWinner);
 
-    redWins.cells[0][1] = RED_MAN;
-    whiteWins.cells[7][0] = WHITE_MAN;
-    noWinner.cells[0][1] = RED_MAN;
-    noWinner.cells[7][0] = WHITE_MAN;
+  redWins.cells[0][1] = RED_MAN;
+  whiteWins.cells[7][0] = WHITE_MAN;
+  noWinner.cells[0][1] = RED_MAN;
+  noWinner.cells[7][0] = WHITE_MAN;
 
-    return challenge_winner(&redWins) == RED_MAN &&
-           challenge_winner(&whiteWins) == WHITE_MAN &&
-           challenge_winner(&noWinner) == EMPTY;
+  return challenge_winner(&redWins) == RED_MAN &&
+         challenge_winner(&whiteWins) == WHITE_MAN &&
+         challenge_winner(&noWinner) == EMPTY;
 }
 
 static void run_challenges(void) {
-    SECTION("aespa checkers challenge ladder");
+  SECTION("aespa checkers challenge ladder");
 
-    print_result("challenge 01 - board bounds", challenge_in_bounds_works());
-    print_result("challenge 02 - dark playable squares", challenge_is_dark_square_works());
-    print_result("challenge 03 - red piece detection", challenge_is_red_works());
-    print_result("challenge 04 - enemy detection", challenge_are_enemies_works());
-    print_result("challenge 05 - starting board setup", challenge_setup_starting_board_works());
-    print_result("challenge 06 - forward delta", challenge_forward_delta_works());
-    print_result("challenge 07 - one-step diagonal", challenge_is_one_step_diagonal_works());
-    print_result("challenge 08 - legal simple move", challenge_can_simple_move_works());
-    print_result("challenge 09 - capture midpoint", challenge_capture_midpoint_works());
-    print_result("challenge 10 - legal capture", challenge_can_capture_works());
-    print_result("challenge 11 - apply simple move", challenge_apply_simple_move_works());
-    print_result("challenge 12 - apply capture", challenge_apply_capture_works());
-    print_result("challenge 13 - promotion", challenge_promote_if_needed_works());
-    print_result("challenge 14 - count side pieces", challenge_count_side_pieces_works());
-    print_result("challenge 15 - winner detection", challenge_winner_works());
+  print_result("challenge 01 - board bounds", challenge_in_bounds_works());
+  print_result("challenge 02 - dark playable squares",
+               challenge_is_dark_square_works());
+  print_result("challenge 03 - red piece detection", challenge_is_red_works());
+  print_result("challenge 04 - enemy detection", challenge_are_enemies_works());
+  print_result("challenge 05 - starting board setup",
+               challenge_setup_starting_board_works());
+  print_result("challenge 06 - forward delta", challenge_forward_delta_works());
+  print_result("challenge 07 - one-step diagonal",
+               challenge_is_one_step_diagonal_works());
+  print_result("challenge 08 - legal simple move",
+               challenge_can_simple_move_works());
+  print_result("challenge 09 - capture midpoint",
+               challenge_capture_midpoint_works());
+  print_result("challenge 10 - legal capture", challenge_can_capture_works());
+  print_result("challenge 11 - apply simple move",
+               challenge_apply_simple_move_works());
+  print_result("challenge 12 - apply capture", challenge_apply_capture_works());
+  print_result("challenge 13 - promotion", challenge_promote_if_needed_works());
+  print_result("challenge 14 - count side pieces",
+               challenge_count_side_pieces_works());
+  print_result("challenge 15 - winner detection", challenge_winner_works());
 }
 
 int main(void) {
-    SECTION("aespa checkers");
-    printf("A step-by-step C challenge ladder toward a tiny checkers engine.\n");
-    printf("If it prints FAIL, that function has not escaped Kwangya yet.\n");
+  SECTION("aespa checkers");
+  printf("A step-by-step C challenge ladder toward a tiny checkers engine.\n");
+  printf("If it prints FAIL, that function has not escaped Kwangya yet.\n");
 
-    Board preview;
-    clear_board(&preview);
-    preview.cells[2][3] = RED_MAN;
-    preview.cells[3][4] = WHITE_MAN;
-    preview.cells[5][0] = RED_KING;
-    printf("\nTiny preview board, not the solved starting board:\n");
-    print_board(&preview);
+  Board preview;
+  clear_board(&preview);
+  preview.cells[2][3] = RED_MAN;
+  preview.cells[3][4] = WHITE_MAN;
+  preview.cells[5][0] = RED_KING;
+  printf("\nTiny preview board, not the solved starting board:\n");
+  print_board(&preview);
 
-    printf("\nPiece name sanity check: %s, %s, %s\n",
-           piece_name(RED_MAN),
-           piece_name(WHITE_KING),
-           piece_name(EMPTY));
+  printf("\nPiece name sanity check: %s, %s, %s\n", piece_name(RED_MAN),
+         piece_name(WHITE_KING), piece_name(EMPTY));
 
-    run_challenges();
+  run_challenges();
 
-    SECTION("done");
-    printf("Next step: fix challenge 01, rebuild, rerun. One comeback stage at a time.\n");
-    return 0;
+  SECTION("done");
+  printf("Next step: fix challenge 01, rebuild, rerun. One comeback stage at a "
+         "time.\n");
+  return 0;
 }
