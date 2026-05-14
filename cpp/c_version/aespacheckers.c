@@ -141,7 +141,7 @@ static bool challenge_in_bounds(int row, int col) {
       return true;
     } else {
       return false;
-    } /* TODO: fix me */
+    }
   } else
     return false;
 }
@@ -166,7 +166,10 @@ static bool challenge_in_bounds_works(void) {
     -> uses even squares instead
 */
 static bool challenge_is_dark_square(int row, int col) {
-  return (row + col) % 2 == 0; /* TODO: fix me */
+  if ((row + col) % 2 != 0) {
+    return true;
+  } else
+    return false;
 }
 
 static bool challenge_is_dark_square_works(void) {
